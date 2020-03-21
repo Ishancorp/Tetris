@@ -40,12 +40,14 @@ function render() {
     ctx.fillStyle = "#AFAFAF";
     ctx.fillRect(0, 0, canvas_width, canvas_height);
 
+    //determine if the active block has collided with a wall, or other blocks
     if (!paused) {
         deactivateBlocks((time_elapsed % 200) == 0);
     }
 
     deleteCompletedRows();
 
+    //draw inactive tiles
     var i;
     for (i = 0; i < tiles.length; i++) {
         var j;
@@ -53,39 +55,47 @@ function render() {
             drawTile(tiles[i].colour, tiles[i].tiles[j].x, tiles[i].tiles[j].y);
         }
     }
+
+    //draw active block
     var j;
     for (j = 0; j < activeTile.tiles.length; j++) {
         drawTile(activeTile.colour, activeTile.tiles[j].x, activeTile.tiles[j].y);
     }
 
+    //draw lines
     ctx.strokeStyle = "#7E7E7E";
     ctx.stroke();
     ctx.strokeStyle = "#000000";
 
+    //draw backgrounds
     ctx.fillStyle = "#CFCFCF";
     ctx.fillRect(0, 0, one_fourth, canvas_height);
     ctx.fillRect(three_fourth, 0, canvas_width, canvas_height);
     ctx.fillRect(one_fourth, 0, three_fourth, 200);
 
+    //draw buttons
     makeButton("Restart", 25, 50, 100, 50, hover_over_restart);
 
     ctx.fillText("Score: " + score, 200, 80);
 
     makeButton(" Pause", 325, 50, 100, 50, hover_over_pause);
 
-    makeButton("Next piece", 25, canvas_height / 2 - 65, 120, 220, false);
+    makeButton("Next block", 25, canvas_height / 2 - 65, 120, 220, false);
 
     //makeButton("", 40, canvas_height / 2 + 60 - 50 - 10, 70, 120, true);
 
+    //draw background for next block
     var k;
     for (k = 0; k < 24; k++) {
         drawTile("#AFAFAF", 35 + 25 * (k % 4), 25 * Math.floor(k / 4) + 75 - 90 + (canvas_height / 2));
     }
 
+    //draw next block
     for (k = 0; k < activeTile.tiles.length; k++) {
         drawTile(tile_to_place.colour, tile_to_place.tiles[k].x - 425 + 10, tile_to_place.tiles[k].y - 90 + (canvas_height / 2));
     }
 
+    //grey background if paused
     if (paused) {
         ctx.globalAlpha = 0.2;
         ctx.fillStyle = "#000000";
@@ -94,6 +104,7 @@ function render() {
     }
 }
 
+//draw the grid
 function drawGrid() {
     var i;
   
@@ -108,6 +119,7 @@ function drawGrid() {
     }
 }
 
+//draw a given tile of a block
 function drawTile(colour, x, y) {
     ctx.fillStyle = colour;
     ctx.fillRect(x, y, tile_length, tile_length);
@@ -117,6 +129,7 @@ function drawTile(colour, x, y) {
     ctx.strokeStyle = "#000000";
 }
 
+//draw a given button
 function makeButton(name, x, y, width, length, hover_in_progress) {
     ctx.fillStyle = "#AFAFAF";
     ctx.font = "16px Verdana";
@@ -132,6 +145,7 @@ function makeButton(name, x, y, width, length, hover_in_progress) {
     ctx.fillStyle = "black";
 }
 
+//deactivate a block if there is a collision
 function deactivateBlocks(cond) {
     var j;
     for (j = 0; j < activeTile.tiles.length; j++) {
@@ -159,6 +173,7 @@ function deactivateBlocks(cond) {
     return false;
 }
 
+//rotate the active block
 function rotateBlock() {
     var j;
     correct_left = 0;
@@ -184,6 +199,7 @@ function rotateBlock() {
     activeTile.central_x = activeTile.central_x + correct_left - correct_right;
 }
 
+//make a block with given coordinates, and if needed type
 function makeBlock(x_pos, y_pos, type) {
     if (type == false) {
         type = Math.floor(Math.random() * 7) + 1;
@@ -213,6 +229,7 @@ function makeBlock(x_pos, y_pos, type) {
     return { colour: "#FFFFFF", central_x: x_pos + 25, central_y: y_pos + 25, tiles: [{ x: x_pos, y: y_pos + 25 }, { x: x_pos, y: y_pos }, { x: x_pos + 25, y: y_pos }, { x: x_pos + 25, y: y_pos + 25 }] };
 }
 
+//detect a collision to the bottom surface
 function hasCollidedAbove(x, y) {
     if (y + 25 == canvas_height) {
         return true;
@@ -229,6 +246,7 @@ function hasCollidedAbove(x, y) {
     return false;
 }
 
+//detect a collision to the left surface
 function hasCollidedLeft(x, y) {
     if (x == one_fourth) {
         return true;
@@ -245,6 +263,7 @@ function hasCollidedLeft(x, y) {
     return false;
 }
 
+//detect a collision to the right surface
 function hasCollidedRight(x, y) {
     if (x == (three_fourth - 25)) {
         return true;
@@ -261,14 +280,17 @@ function hasCollidedRight(x, y) {
     return false;
 }
 
+//delete rows of tiles if complete
 function deleteCompletedRows() {
     var rows = Array(16);
     var i;
     var deleted_rows = [];
+    //initiate array
     for (i = 0; i < rows.length; i++) {
         rows[i] = 0;
     }
 
+    //detect deleted rows
     var i;
     for (i = 0; i < tiles.length; i++) {
         var j;
@@ -281,6 +303,7 @@ function deleteCompletedRows() {
         }
     }
 
+    //delete completed rows
     mass_adjust = 0;
     var i;
     for (i = 0; i < tiles.length; i++) {
@@ -294,7 +317,8 @@ function deleteCompletedRows() {
         }
         mass_adjust++;
     }
-    
+
+    //shift rows according to deletion
     var i;
     for (i = 0; i < tiles.length; i++) {
         var j;
@@ -316,8 +340,9 @@ function deleteCompletedRows() {
     
 }
 
-
+//detect key presses
 document.addEventListener('keydown', (e) => {
+    //detect right press, adjust if not collided
     if (e.code === "ArrowRight" && !paused) {
         var edge_hit = false;
         var j;
@@ -336,6 +361,8 @@ document.addEventListener('keydown', (e) => {
 
         deactivate_block = false;
     }
+
+    //detect left press, adjust if not collided
     else if (e.code === "ArrowLeft" && !paused) {
         var edge_hit = false;
         var j;
@@ -354,6 +381,8 @@ document.addEventListener('keydown', (e) => {
 
         deactivate_block = false;
     }
+
+    //detect left press, adjust if not collided
     else if (e.code === "ArrowDown" && !paused) {
         var time_arrow = 0;
         while (deactivateBlocks(true)) {
@@ -361,6 +390,8 @@ document.addEventListener('keydown', (e) => {
             time_elapsed--;
         }
     }
+
+    //detect space, move block down
     else if (e.code === "Space" && !paused) {
         var time_arrow = 0;
         while (!deactivateBlocks(time_arrow % 2)) {
@@ -368,6 +399,8 @@ document.addEventListener('keydown', (e) => {
             time_elapsed--;
         }
     }
+
+    //detect up press, rotate block
     else if (e.code === "ArrowUp" && !paused) {
         rotateBlock();
     }
@@ -383,6 +416,7 @@ document.addEventListener('keyup', (e) => {
     }
 });
 
+//detect pause, restart buttons
 canvas.addEventListener('click', (e) => {
     x_pos = e.clientX;
     y_pos = e.clientY;
@@ -399,6 +433,7 @@ canvas.addEventListener('click', (e) => {
     }
 });
 
+//adjust hover buttons
 canvas.onmousemove = function (e) {
     x_pos = e.clientX;
     y_pos = e.clientY;
