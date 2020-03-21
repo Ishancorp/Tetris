@@ -37,7 +37,7 @@ drawGrid();
 
 function render() {
     time_elapsed += 1;
-    ctx.fillStyle = "#AFAFAF";
+    ctx.fillStyle = "#6F6F6F";
     ctx.fillRect(0, 0, canvas_width, canvas_height);
 
     //determine if the active block has collided with a wall, or other blocks
@@ -87,7 +87,7 @@ function render() {
     //draw background for next block
     var k;
     for (k = 0; k < 24; k++) {
-        drawTile("#AFAFAF", 35 + 25 * (k % 4), 25 * Math.floor(k / 4) + 75 - 90 + (canvas_height / 2));
+        drawTile("#6F6F6F", 35 + 25 * (k % 4), 25 * Math.floor(k / 4) + 75 - 90 + (canvas_height / 2));
     }
 
     //draw next block
@@ -131,7 +131,7 @@ function drawTile(colour, x, y) {
 
 //draw a given button
 function makeButton(name, x, y, width, length, hover_in_progress) {
-    ctx.fillStyle = "#AFAFAF";
+    ctx.fillStyle = "#6F6F6F";
     ctx.font = "16px Verdana";
     if (hover_in_progress) {
         ctx.fillRect(x, y, width, length);
