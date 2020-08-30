@@ -8,4 +8,4 @@ This is a Tetris game I made from scratch using Javascript with HTML Canvas.
 * **Down arrow**: slowly moves block down
 * **Left arrow**: moves block to the left
 * **Right arrow**: moves block to the right
-* **Space**: moves block down immediately
+* **Space**: moves block down immediately  
