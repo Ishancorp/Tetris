@@ -27,12 +27,14 @@ var deactivate_block = true;
 var score = 0;
 var hover_over_restart = false;
 var hover_over_pause = false;
+var hover_over_hold = false;
 var paused = false;
 var one_fourth = 375;
 var three_fourth = 625;
 var tile_length = 25;
 var tile_to_place = makeBlock(475, 150, false);
 var game_over = false;
+var hold_tile = "";
 drawGrid();
 
 function render() {
@@ -80,7 +82,11 @@ function render() {
 
     makeButton(" Pause", 325, 50, 100, 50, hover_over_pause);
 
+    makeButton("  Hold", 625, 50, 100, 50, hover_over_hold);
+
     makeButton("Next block", 25, canvas_height / 2 - 65, 120, 220, false);
+
+    makeButton("Held block", canvas_width - 150, canvas_height / 2 - 65, 120, 220, false);
 
     //makeButton("", 40, canvas_height / 2 + 60 - 50 - 10, 70, 120, true);
 
@@ -94,6 +100,19 @@ function render() {
     for (k = 0; k < activeTile.tiles.length; k++) {
         drawTile(tile_to_place.colour, tile_to_place.tiles[k].x - 425 + 10, tile_to_place.tiles[k].y - 90 + (canvas_height / 2));
     }
+
+    //draw background for hold block
+    for (k = 0; k < 24; k++) {
+        drawTile("#6F6F6F", canvas_width - 140 + 25 * (k % 4), 25 * Math.floor(k / 4) + 75 - 90 + (canvas_height / 2));
+    }
+
+    //draw hold block
+    if (hold_tile != "") {
+    	for (k = 0; k < activeTile.tiles.length; k++) {
+            drawTile(hold_tile.colour, hold_tile.tiles[k].x + 425 - 10, hold_tile.tiles[k].y - 90 + (canvas_height / 2));
+    	}
+    }
+
 
     //grey background if paused
     if (paused) {
@@ -205,25 +224,25 @@ function makeBlock(x_pos, y_pos, type) {
         type = Math.floor(Math.random() * 7) + 1;
     }
 
-    if (type == YELLOW_BLOCK) {
+    if (type == YELLOW_BLOCK || type == "#FFFFCF") {
         return { colour: "#FFFFCF", central_x: x_pos + 25, central_y : y_pos + 25, tiles: [{ x: x_pos, y: y_pos + 25 }, { x: x_pos, y: y_pos }, { x: x_pos + 25, y: y_pos + 25 }, { x: x_pos + 25, y: y_pos }] };
     }
-    else if (type == BLUE_BLOCK) {
+    else if (type == BLUE_BLOCK || type == "#CFCFFF") {
         return { colour: "#CFCFFF", central_x: x_pos, central_y: y_pos, tiles: [{ x: x_pos, y: y_pos - 25 }, { x: x_pos, y: y_pos - 50 }, { x: x_pos, y: y_pos + 25 }, { x: x_pos, y: y_pos }] };
     }
-    else if (type == GREEN_BLOCK) {
+    else if (type == GREEN_BLOCK || type == "#CFFFCF") {
         return { colour: "#CFFFCF", central_x: x_pos + 25, central_y: y_pos + 25, tiles: [{ x: x_pos, y: y_pos - 25 }, { x: x_pos, y: y_pos }, { x: x_pos + 25, y: y_pos + 25 }, { x: x_pos + 25, y: y_pos }] };
     }
-    else if (type == RED_BLOCK) {
+    else if (type == RED_BLOCK || type == "#FFCFCF") {
         return { colour: "#FFCFCF", central_x: x_pos + 25, central_y: y_pos + 25, tiles: [{ x: x_pos, y: y_pos + 25 }, { x: x_pos, y: y_pos }, { x: x_pos + 25, y: y_pos - 25 }, { x: x_pos + 25, y: y_pos }] };
     }
-    else if (type == PURPLE_BLOCK) {
+    else if (type == PURPLE_BLOCK || type == "#FFCFFF") {
         return { colour: "#FFCFFF", central_x: x_pos + 12.5, central_y: y_pos + 12.5, tiles: [{ x: x_pos, y: y_pos + 25 }, { x: x_pos, y: y_pos }, { x: x_pos, y: y_pos - 25 }, { x: x_pos + 25, y: y_pos }] };
     }
-    else if (type == ORANGE_BLOCK) {
+    else if (type == ORANGE_BLOCK || type == "#FFEFCF") {
         return { colour: "#FFEFCF", central_x: x_pos + 25, central_y: y_pos, tiles: [{ x: x_pos, y: y_pos + 25 }, { x: x_pos, y: y_pos }, { x: x_pos, y: y_pos - 25 }, { x: x_pos + 25, y: y_pos + 25 }] };
     }
-    else if (type == DBLUE_BLOCK) {
+    else if (type == DBLUE_BLOCK || type == "#BFBFEF") {
         return { colour: "#BFBFEF", central_x: x_pos + 25, central_y: y_pos, tiles: [{ x: x_pos + 25, y: y_pos + 25 }, { x: x_pos + 25, y: y_pos }, { x: x_pos + 25, y: y_pos - 25 }, { x: x_pos, y: y_pos + 25 }] };
     }
     return { colour: "#FFFFFF", central_x: x_pos + 25, central_y: y_pos + 25, tiles: [{ x: x_pos, y: y_pos + 25 }, { x: x_pos, y: y_pos }, { x: x_pos + 25, y: y_pos }, { x: x_pos + 25, y: y_pos + 25 }] };
@@ -427,9 +446,22 @@ canvas.addEventListener('click', (e) => {
         tile_to_place = makeBlock(475, 150, false);
         score = 0;
         paused = false;
+	hold_tile = "";
     }
     else if (x_pos >= 325 && x_pos <= 425 && y_pos >= 50 && y_pos <= 100) {
         paused = !paused;
+    }
+    else if (x_pos >= 625 && x_pos <= 725 && y_pos >= 50 && y_pos <= 100) {
+	if (hold_tile == "") {
+	    hold_tile = makeBlock(475, 150, activeTile.colour);
+	    activeTile = tile_to_place;
+	    tile_to_place = makeBlock(475, 150, false);
+	}
+	else {
+	    old_hold = hold_tile
+	    hold_tile = makeBlock(475, 150, activeTile.colour);
+	    activeTile = makeBlock(475, 150, old_hold.colour);
+	}
     }
 });
 
@@ -443,8 +475,12 @@ canvas.onmousemove = function (e) {
     else if (x_pos >= 325 && x_pos <= 425 && y_pos >= 50 && y_pos <= 100) {
         hover_over_pause = true;
     }
+    else if (x_pos >= 625 && x_pos <= 725 && y_pos >= 50 && y_pos <= 100) {
+	hover_over_hold = true;
+    }
     else {
         hover_over_restart = false;
         hover_over_pause = false;
+	hover_over_hold = false;
     }
 }
