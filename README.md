@@ -1,6 +1,7 @@
 # Tetris
 
 This simulates Tetris with a javascript program which uses an MVC model.
+
 ## Controls
 
 * **Up arrow**: rotates block
