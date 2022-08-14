@@ -5,8 +5,12 @@
     <meta charset="utf-8" />
     <title>Tetris</title>
 </head>
-<body onload="render();">
+<body onload="sess.common_procedures();">
     <canvas id="tetris_canvas" width="1000" height="600"></canvas>
-    <script src="tetris_canvas.js"></script>
+    <script src="lib/helpers.js"></script>
+    <script src="lib/renderer.js"></script>
+    <script src="lib/block.js"></script>
+    <script src="lib/tetris_logic.js"></script>
+    <script src="lib/player_actions.js"></script>
 </body>
 </html>
