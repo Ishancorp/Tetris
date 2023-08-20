@@ -49,6 +49,10 @@ export default class TetrisLogic{
         }
     }
 
+    getState(){
+        return {grid: this.getFullGrid(), rows: this.rows, score: this.score, level:this.level, completedRows: this.getCompletedRows()}
+    }
+
     render(){
         //this.renderer.render(this.getFullGrid(), this.rows, this.score, this.level, this.getCompletedRows(), Math.floor(this.true_time_elapsed/15));
     }
@@ -241,6 +245,10 @@ export default class TetrisLogic{
             }
         }
         return brd;
+    }
+
+    getScore(){
+        return this.score;
     }
 
     getRows(){

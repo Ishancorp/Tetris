@@ -27,11 +27,18 @@ function Grid(props) {
 function App() {
   let [sess] = useState(new TetrisLogic());
   const [grid, setGrid] = useState(sess.getFullGrid().subarray(3, -1));
+  const [score, setScore] = useState(0);
+  const [rows, setRows] = useState(0);
+  const [level, setLevel] = useState(1);
   let i = false
 
   const thingy = () => {
     sess.outer_procedure();
-    setGrid(sess.getFullGrid());
+    const curState = sess.getState()
+    setGrid(curState.grid);
+    setScore(curState.score);
+    setRows(curState.rows);
+    setLevel(curState.level);
     console.log(grid);
   }
 
@@ -62,7 +69,10 @@ function App() {
 
   return (
     <div className='app'>
-      <Grid grid={sess.getFullGrid().subarray(3, -1)}/>
+      <p>Score: {score}</p>
+      <p>Rows: {rows}</p>
+      <p>Level {level}</p>
+      <Grid grid={grid.subarray(3, -1)}/>
     </div>
   );
 }
