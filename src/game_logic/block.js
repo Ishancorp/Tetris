@@ -1,4 +1,4 @@
-import {types, blocks, generateEmptyBoard, generateMiniBoard} from './helpers.js';
+import { blocks, generateEmptyBoard, generateMiniBoard } from './helpers.js';
 
 export default class Block{
     x=3;
@@ -9,7 +9,7 @@ export default class Block{
 
     //detect if collision in logic file
     rotate(){
-        var old_block = this.blk;
+        let old_block = this.blk;
         this.blk = generateMiniBoard(this.blk.length);
         console.log(old_block);
         for(var i = 0; i < this.blk.length; ++i){

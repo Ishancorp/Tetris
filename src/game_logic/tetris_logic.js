@@ -1,12 +1,10 @@
 
-import {types, blocks, generateEmptyBoard, generateMiniBoard} from './helpers';
-import Renderer from './renderer';
+import { generateEmptyBoard } from './helpers';
 import Block from './block.js';
 
 export default class TetrisLogic{
     board = generateEmptyBoard();
     rows = 0;
-    //renderer = new Renderer();
     rate = 64;
     level = 1;
     score = 0;
@@ -28,7 +26,7 @@ export default class TetrisLogic{
         
         this.deleteCurrentRows();
 
-        if(this.completed_rows != []){
+        if(this.completed_rows !== []){
             this.active_block.iterDown();
         }
         else if(this.active_block == null){
@@ -38,13 +36,11 @@ export default class TetrisLogic{
         this.level = Math.min(7, Math.floor(this.rows/10))+1;
         console.log("Level" + this.level);
         this.rate = 64 - (8*(this.level-1));
-
-        this.render();
     }
 
     outer_procedure(){
         this.true_time_elapsed += 1;
-        if((this.true_time_elapsed % this.rate == 0) && (!this.pause)){
+        if((this.true_time_elapsed % this.rate === 0) && (!this.pause)){
             this.common_procedures();
         }
     }
@@ -53,16 +49,12 @@ export default class TetrisLogic{
         return {grid: this.getFullGrid(), rows: this.rows, score: this.score, level:this.level, completedRows: this.getCompletedRows()}
     }
 
-    render(){
-        //this.renderer.render(this.getFullGrid(), this.rows, this.score, this.level, this.getCompletedRows(), Math.floor(this.true_time_elapsed/15));
-    }
-
     deactivateBlocks(){
         if(this.hasCollidedAbove()){
             this.time_elapsed = 1;
-            var brd = this.active_block.getFullBlock();
-            for(var i = 0; i < brd.length; ++i){
-                for(var j = 0; j < brd[i].length; ++j){
+            let brd = this.active_block.getFullBlock();
+            for(let i = 0; i < brd.length; ++i){
+                for(let j = 0; j < brd[i].length; ++j){
                     this.board[i][j] = brd[i][j] + this.board[i][j];
                 }
             }
@@ -110,12 +102,12 @@ export default class TetrisLogic{
     }
 
     isOnTopOf(){
-        var full_block = this.active_block.getFullBlock();
-        var block_x = this.active_block.getX();
-        var block_y = this.active_block.getY();
+        let full_block = this.active_block.getFullBlock();
+        let block_x = this.active_block.getX();
+        let block_y = this.active_block.getY();
 
-        for(var i = block_y+3; i >= block_y; --i){
-            for(var j = block_x; j < block_x+this.active_block.getSize(); ++j){
+        for(let i = block_y+3; i >= block_y; --i){
+            for(let j = block_x; j < block_x+this.active_block.getSize(); ++j){
                 if(i < 0 || j < 0 || i >= full_block.length || j >= full_block[i].length){
                     return true;
                 }
@@ -128,14 +120,14 @@ export default class TetrisLogic{
     }
 
     hasCollidedAbove(){
-        var full_block = this.active_block.getFullBlock();
-        var block_x = this.active_block.getX();
-        var block_y = this.active_block.getY();
+        let full_block = this.active_block.getFullBlock();
+        let block_x = this.active_block.getX();
+        let block_y = this.active_block.getY();
 
-        for(var i = Math.min(block_y+3, 24); i >= block_y; --i){
-            for(var j = block_x; j < Math.min(block_x+this.active_block.getSize(), 10); ++j){
+        for(let i = Math.min(block_y+3, 24); i >= block_y; --i){
+            for(let j = block_x; j < Math.min(block_x+this.active_block.getSize(), 10); ++j){
                 if(full_block[i][j]){
-                    if(i+1 == this.board.length){
+                    if(i+1 === this.board.length){
                         return true;
                     }
                     if(this.board[i+1][j]){
@@ -148,14 +140,14 @@ export default class TetrisLogic{
     }
 
     hasCollidedLeft(){
-        var full_block = this.active_block.getFullBlock();
-        var block_x = this.active_block.getX();
-        var block_y = this.active_block.getY();
+        let full_block = this.active_block.getFullBlock();
+        let block_x = this.active_block.getX();
+        let block_y = this.active_block.getY();
 
-        for(var i = Math.min(block_y+3, 24); i >= block_y; --i){
-            for(var j = block_x; j < Math.min(block_x+this.active_block.getSize(), 10); ++j){
+        for(let i = Math.min(block_y+3, 24); i >= block_y; --i){
+            for(let j = block_x; j < Math.min(block_x+this.active_block.getSize(), 10); ++j){
                 if(full_block[i][j]){
-                    if(j == 0 || this.board[i][j-1]){
+                    if(j === 0 || this.board[i][j-1]){
                         return true;
                     }
                 }
@@ -165,14 +157,14 @@ export default class TetrisLogic{
     }
 
     hasCollidedRight(){
-        var full_block = this.active_block.getFullBlock();
-        var block_x = this.active_block.getX();
-        var block_y = this.active_block.getY();
+        let full_block = this.active_block.getFullBlock();
+        let block_x = this.active_block.getX();
+        let block_y = this.active_block.getY();
 
-        for(var i = Math.min(block_y+3, 24); i >= block_y; --i){
-            for(var j = block_x; j < Math.min(block_x+this.active_block.getSize(), 10); ++j){
+        for(let i = Math.min(block_y+3, 24); i >= block_y; --i){
+            for(let j = block_x; j < Math.min(block_x+this.active_block.getSize(), 10); ++j){
                 if(full_block[i][j]){
-                    if(j+1 == this.board[0].length || this.board[i][j+1]){
+                    if(j+1 === this.board[0].length || this.board[i][j+1]){
                         return true;
                     }
                 }
@@ -182,11 +174,11 @@ export default class TetrisLogic{
     }
 
     getCompletedRows(){
-        var tot_rows = [];
+        let tot_rows = [];
 
-        for(var i = 0; i < this.board.length; ++i){
-            var complete_row = true;
-            for(var j = 0; j < this.board[i].length; ++j){
+        for(let i = 0; i < this.board.length; ++i){
+            let complete_row = true;
+            for(let j = 0; j < this.board[i].length; ++j){
                 if(!this.board[i][j]){
                     complete_row = false;
                 }
@@ -203,44 +195,44 @@ export default class TetrisLogic{
     }
 
     deleteCurrentRows(){
-        var tot_rows = this.getCompletedRows(1);
+        let tot_rows = this.getCompletedRows(1);
 
-        for(var i = tot_rows.length-1; i >= 0; --i){
+        for(let i = tot_rows.length-1; i >= 0; --i){
             this.board.splice(tot_rows[i], 1);
             this.rows++;
         }
-        for(var i = tot_rows.length-1; i >= 0; --i){
+        for(let i = tot_rows.length-1; i >= 0; --i){
             this.board.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
         }
 
-        if(tot_rows.length == 1){
+        if(tot_rows.length === 1){
             this.score += 40*this.level;
         }
-        else if(tot_rows.length == 2){
+        else if(tot_rows.length === 2){
             this.score += 100*this.level;
         }
-        else if(tot_rows.length == 3){
+        else if(tot_rows.length === 3){
             this.score += 300*this.level;
         }
-        else if(tot_rows.length == 4){
+        else if(tot_rows.length === 4){
             this.score += 1200*this.level;
         }
     }
 
     setRowsToColour(colour){
-        var tot_rows = this.getCompletedRows();
-        for(var item = 0; item < tot_rows.length; ++item){
-            for(var j = 0; j < this.getFullGrid()[tot_rows[item]].length; ++j){
+        let tot_rows = this.getCompletedRows();
+        for(let item = 0; item < tot_rows.length; ++item){
+            for(let j = 0; j < this.getFullGrid()[tot_rows[item]].length; ++j){
                 this.board[tot_rows[item]][j] = colour;
             }
         }
     }
 
     getFullGrid(){
-        var brd = generateEmptyBoard();
-        var nuarray = this.active_block.getFullBlock();
-        for(var i = 0; i < brd.length; ++i){
-            for(var j = 0; j < brd[i].length; ++j){
+        let brd = generateEmptyBoard();
+        let nuarray = this.active_block.getFullBlock();
+        for(let i = 0; i < brd.length; ++i){
+            for(let j = 0; j < brd[i].length; ++j){
                 brd[i][j] = nuarray[i][j] + this.board[i][j];
             }
         }
