@@ -1,28 +1,11 @@
-import './App.css';
+import Grid from './components/Grid'
 import { useState, useEffect } from 'react';
 import TetrisLogic from './game_logic/tetris_logic.js'
-
-function Tile({x, y, color}) {
-  return <div className={`block ${y}${x}` + ` c${color}`}></div>
-}
 
 Array.prototype.subarray = function(start, end) {
   if (!end) { end = -1; } 
   return this.slice(start, this.length + 1 - (end * -1));
 };
-
-function Grid(props) {
-  return (
-    <div className='app'>
-      {props.grid.map((row, y) =>
-        <div className='row'>
-          {row.map((color, x) => 
-            <Tile x={x} y={y} color={color}/>
-          )}
-        </div>
-      )}
-    </div>);
-}
 
 function App() {
   let [sess] = useState(new TetrisLogic());
@@ -30,29 +13,30 @@ function App() {
   const [score, setScore] = useState(0);
   const [rows, setRows] = useState(0);
   const [level, setLevel] = useState(1);
+  const [paused, setPaused] = useState(false);
   let i = false
 
-  const thingy = () => {
-    sess.outer_procedure();
+  const updateState = () => {
     const curState = sess.getState()
     setGrid(curState.grid);
     setScore(curState.score);
     setRows(curState.rows);
     setLevel(curState.level);
-    console.log(grid);
+    setPaused(curState.paused)
   }
 
   useEffect(() => {
     setTimeout(() => {
-      thingy();
-    }, 10);
+      sess.outer_procedure();
+      updateState();
+      console.log(grid);
+    }, 1);
   });
 
   useEffect(() => {
     window.addEventListener('keydown', event => {
       if (event.code === "ArrowLeft" && i) {
         sess.blockLeft();
-        
       }
       else if (event.code === "ArrowRight" && i) {
           sess.blockRight();
@@ -73,6 +57,7 @@ function App() {
       <p>Rows: {rows}</p>
       <p>Level {level}</p>
       <Grid grid={grid.subarray(3, -1)}/>
+      <button onClick={()=>sess.setPause()}>{paused? "Continue" : "Pause"} Game</button>
     </div>
   );
 }

@@ -17,7 +17,6 @@ export default class TetrisLogic{
         this.true_time_elapsed = 0;
     
         this.active_block = new Block();
-        //console.log('asf')
     }
 
     common_procedures(){
@@ -46,7 +45,7 @@ export default class TetrisLogic{
     }
 
     getState(){
-        return {grid: this.getFullGrid(), rows: this.rows, score: this.score, level:this.level, completedRows: this.getCompletedRows()}
+        return {grid: this.getFullGrid(), paused: this.pause, rows: this.rows, score: this.score, level:this.level, completedRows: this.getCompletedRows()}
     }
 
     deactivateBlocks(){
@@ -226,6 +225,10 @@ export default class TetrisLogic{
                 this.board[tot_rows[item]][j] = colour;
             }
         }
+    }
+
+    setPause(){
+        this.pause = !(this.pause);
     }
 
     getFullGrid(){
