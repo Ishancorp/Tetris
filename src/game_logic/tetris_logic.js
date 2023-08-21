@@ -8,8 +8,8 @@ export default class TetrisLogic{
     rate = 64;
     level = 1;
     score = 0;
-    delay = false;
     pause = false;
+    game_over = false;
     completed_rows = [];
 
     constructor(){
@@ -45,7 +45,15 @@ export default class TetrisLogic{
     }
 
     getState(){
-        return {grid: this.getFullGrid(), paused: this.pause, rows: this.rows, score: this.score, level:this.level, completedRows: this.getCompletedRows()}
+        return {
+            grid: this.getFullGrid(), 
+            paused: this.pause, 
+            game_over: this.game_over, 
+            rows: this.rows, 
+            score: this.score, 
+            level:this.level, 
+            completedRows: this.getCompletedRows()
+        }
     }
 
     deactivateBlocks(){
@@ -58,6 +66,10 @@ export default class TetrisLogic{
                 }
             }
             this.newBlock();
+            if(this.isOnTopOf()){
+                this.pause = true;
+                this.game_over = true;
+            }
             this.true_time_elapsed = 15;
         }
     }

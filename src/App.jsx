@@ -14,6 +14,7 @@ function App() {
   const [rows, setRows] = useState(0);
   const [level, setLevel] = useState(1);
   const [paused, setPaused] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
   let i = false
 
   const updateState = () => {
@@ -22,7 +23,8 @@ function App() {
     setScore(curState.score);
     setRows(curState.rows);
     setLevel(curState.level);
-    setPaused(curState.paused)
+    setPaused(curState.paused);
+    setGameOver(curState.game_over);
   }
 
   useEffect(() => {
@@ -57,7 +59,7 @@ function App() {
       <p>Rows: {rows}</p>
       <p>Level {level}</p>
       <Grid grid={grid.subarray(3, -1)}/>
-      <button onClick={()=>sess.setPause()}>{paused? "Continue" : "Pause"} Game</button>
+      <button onClick={()=>sess.setPause()} disabled={gameOver}>{paused? "Continue" : "Pause"} Game</button>
     </div>
   );
 }
