@@ -29,9 +29,12 @@ function App() {
 
   useEffect(() => {
     setTimeout(() => {
-      sess.outer_procedure();
-      updateState();
-      console.log(grid);
+      if (gameOver) console.log('Game over');
+      else{
+        sess.outer_procedure();
+        updateState();
+        console.log(grid);
+      }
     }, 5);
   });
 
