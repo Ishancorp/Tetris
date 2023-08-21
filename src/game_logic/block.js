@@ -40,11 +40,8 @@ export default class Block{
         return this.blk.length;
     }
 
-    getX(){
-        return this.x;
-    }
-    getY(){
-        return this.y;
+    getCoord(){
+        return {x: this.x, y: this.y}
     }
 
     iterDown(){

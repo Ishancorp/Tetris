@@ -30,7 +30,7 @@ function App() {
       sess.outer_procedure();
       updateState();
       console.log(grid);
-    }, 1);
+    }, 5);
   });
 
   useEffect(() => {

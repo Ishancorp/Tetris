@@ -51,7 +51,7 @@ export default class TetrisLogic{
     deactivateBlocks(){
         if(this.hasCollidedAbove()){
             this.time_elapsed = 1;
-            let brd = this.active_block.getFullBlock();
+            const brd = this.active_block.getFullBlock();
             for(let i = 0; i < brd.length; ++i){
                 for(let j = 0; j < brd[i].length; ++j){
                     this.board[i][j] = brd[i][j] + this.board[i][j];
@@ -101,9 +101,8 @@ export default class TetrisLogic{
     }
 
     isOnTopOf(){
-        let full_block = this.active_block.getFullBlock();
-        let block_x = this.active_block.getX();
-        let block_y = this.active_block.getY();
+        const full_block = this.active_block.getFullBlock();
+        const {x: block_x, y: block_y} = this.active_block.getCoord();
 
         for(let i = block_y+3; i >= block_y; --i){
             for(let j = block_x; j < block_x+this.active_block.getSize(); ++j){
@@ -119,9 +118,8 @@ export default class TetrisLogic{
     }
 
     hasCollidedAbove(){
-        let full_block = this.active_block.getFullBlock();
-        let block_x = this.active_block.getX();
-        let block_y = this.active_block.getY();
+        const full_block = this.active_block.getFullBlock();
+        const {x: block_x, y: block_y} = this.active_block.getCoord();
 
         for(let i = Math.min(block_y+3, 24); i >= block_y; --i){
             for(let j = block_x; j < Math.min(block_x+this.active_block.getSize(), 10); ++j){
@@ -139,9 +137,8 @@ export default class TetrisLogic{
     }
 
     hasCollidedLeft(){
-        let full_block = this.active_block.getFullBlock();
-        let block_x = this.active_block.getX();
-        let block_y = this.active_block.getY();
+        const full_block = this.active_block.getFullBlock();
+        const {x: block_x, y: block_y} = this.active_block.getCoord();
 
         for(let i = Math.min(block_y+3, 24); i >= block_y; --i){
             for(let j = block_x; j < Math.min(block_x+this.active_block.getSize(), 10); ++j){
@@ -156,9 +153,8 @@ export default class TetrisLogic{
     }
 
     hasCollidedRight(){
-        let full_block = this.active_block.getFullBlock();
-        let block_x = this.active_block.getX();
-        let block_y = this.active_block.getY();
+        const full_block = this.active_block.getFullBlock();
+        const {x: block_x, y: block_y} = this.active_block.getCoord();
 
         for(let i = Math.min(block_y+3, 24); i >= block_y; --i){
             for(let j = block_x; j < Math.min(block_x+this.active_block.getSize(), 10); ++j){
@@ -194,7 +190,7 @@ export default class TetrisLogic{
     }
 
     deleteCurrentRows(){
-        let tot_rows = this.getCompletedRows(1);
+        const tot_rows = this.getCompletedRows(1);
 
         for(let i = tot_rows.length-1; i >= 0; --i){
             this.board.splice(tot_rows[i], 1);
@@ -219,7 +215,7 @@ export default class TetrisLogic{
     }
 
     setRowsToColour(colour){
-        let tot_rows = this.getCompletedRows();
+        const tot_rows = this.getCompletedRows();
         for(let item = 0; item < tot_rows.length; ++item){
             for(let j = 0; j < this.getFullGrid()[tot_rows[item]].length; ++j){
                 this.board[tot_rows[item]][j] = colour;
@@ -233,7 +229,7 @@ export default class TetrisLogic{
 
     getFullGrid(){
         let brd = generateEmptyBoard();
-        let nuarray = this.active_block.getFullBlock();
+        const nuarray = this.active_block.getFullBlock();
         for(let i = 0; i < brd.length; ++i){
             for(let j = 0; j < brd[i].length; ++j){
                 brd[i][j] = nuarray[i][j] + this.board[i][j];
