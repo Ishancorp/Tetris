@@ -1,6 +1,7 @@
 import Grid from './components/Grid'
 import { useState, useEffect } from 'react';
 import TetrisLogic from './game_logic/tetris_logic.js'
+import './css/App.css'
 
 Array.prototype.subarray = function(start, end) {
   if (!end) { end = -1; } 
@@ -15,7 +16,7 @@ function App() {
   const [level, setLevel] = useState(1);
   const [paused, setPaused] = useState(false);
   const [gameOver, setGameOver] = useState(false);
-  let i = false
+  let i = false;
 
   const updateState = () => {
     const curState = sess.getState()
@@ -63,6 +64,7 @@ function App() {
       <p>Level {level}</p>
       <Grid grid={grid.subarray(3, -1)}/>
       <button onClick={()=>sess.setPause()} disabled={gameOver}>{paused? "Continue" : "Pause"} Game</button>
+      <button onClick={()=>{sess.newSesh(); updateState()}}>New Game</button>
     </div>
   );
 }

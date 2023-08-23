@@ -3,16 +3,19 @@ import { generateEmptyBoard } from './helpers';
 import Block from './block.js';
 
 export default class TetrisLogic{
-    board = generateEmptyBoard();
-    rows = 0;
-    rate = 64;
-    level = 1;
-    score = 0;
-    pause = false;
-    game_over = false;
-    completed_rows = [];
-
     constructor(){
+        this.newSesh();
+    }
+
+    newSesh() {
+        this.board = generateEmptyBoard();
+        this.rows = 0;
+        this.rate = 64;
+        this.level = 1;
+        this.score = 0;
+        this.pause = false;
+        this.game_over = false;
+        this.completed_rows = [];
         this.time_elapsed = 0;
         this.true_time_elapsed = 0;
     

@@ -1,7 +1,11 @@
 import '../css/Grid.css';
 
 function Tile({x, y, color}) {
-  return <div className={`tile ${y}${x}` + ` c${color}`}></div>
+  const subtile = color ? <div className={`subtile ${y}${x}` + ` sc${color}`}></div> : '';
+  return (
+    <div className={`tile ${y}${x}` + ` c${color}`}>
+      {subtile}
+    </div>);
 }
 
 Array.prototype.subarray = function(start, end) {
