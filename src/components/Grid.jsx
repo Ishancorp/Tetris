@@ -1,10 +1,13 @@
 import '../css/Grid.css';
 
+function Subtile({x, y, color}) {
+  return (<div className={`subtile ${y}${x}` + ` sc${color}`}></div>);
+}
+
 function Tile({x, y, color}) {
-  const subtile = color ? <div className={`subtile ${y}${x}` + ` sc${color}`}></div> : '';
   return (
     <div className={`tile ${y}${x}` + ` c${color}`}>
-      {subtile}
+      {color ? <Subtile x={x} y={y} color={color}/> : ''}
     </div>);
 }
 

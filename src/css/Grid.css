@@ -38,12 +38,33 @@
 .c9 {background-color: #4F4F4F}
 
 .sc0 {background-color: #FFFFFF}
-.sc1 {background-color: #FFFF80}
-.sc2 {background-color: #C0C0FF}
-.sc3 {background-color: #80FF80}
-.sc4 {background-color: #FF8080}
-.sc5 {background-color: #8080FF}
-.sc6 {background-color: #FFC080}
-.sc7 {background-color: #FF80FF}
+.sc1 {
+  background: linear-gradient(135deg, #FFFFD0, #FFFF00);
+  border: 0.5px solid #FFFFD0;
+}
+.sc2 {
+  background: linear-gradient(135deg, #A0A0FF, #8080FF);
+  border: 0.5px solid #A0A0FF;
+}
+.sc3 {
+  background: linear-gradient(135deg, #A0FFA0, #00FF00);
+  border: 0.5px solid #A0FFA0;
+}
+.sc4 {
+  background: linear-gradient(135deg, #FF8080, #FF0000);
+  border: 0.5px solid #FF8080;
+}
+.sc5 {
+  background: linear-gradient(135deg, #6060FF, #0000FF);
+  border: 0.5px solid #6060FF;
+}
+.sc6 {
+  background: linear-gradient(135deg, #FFC080, #FF8000);
+  border: 0.5px solid #FFC080;
+}
+.sc7 {
+  background: linear-gradient(135deg, #FF80FF, #FF00FF);
+  border: 0.5px solid #FF80FF;
+}
 .sc8 {background-color: #C0C0C0}
 .sc9 {background-color: #4F4F4F}
