@@ -22,18 +22,18 @@ const blocks = {
 }
 
 function generateMiniBoard(size){
-    if(size == 4){
+    if(size === 4){
         return [[0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0]];
     }
-    else if(size == 3){
+    else if(size === 3){
         return [[0, 0, 0],
         [0, 0, 0],
         [0, 0, 0]];
     }
-    else if(size == 2){
+    else if(size === 2){
         return [[0, 0],
         [0, 0]];
     }
