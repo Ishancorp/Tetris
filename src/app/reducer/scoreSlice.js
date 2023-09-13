@@ -15,4 +15,6 @@ export const scoreSlice = createSlice({
 
 export const { shift, reset } = scoreSlice.actions
 
+export const selectScore = state => state.score
+
 export default scoreSlice.reducer;

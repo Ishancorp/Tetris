@@ -2,6 +2,7 @@ import Grid from './components/Grid'
 import { useState, useEffect } from 'react';
 import TetrisLogic from './game_logic/tetris_logic.js'
 import './css/App.css'
+import { shift, reset, selectScore } from './app/reducer/scoreSlice'
 
 Array.prototype.subarray = function(start, end) {
   if (!end) { end = -1; } 
@@ -10,7 +11,7 @@ Array.prototype.subarray = function(start, end) {
 
 function App() {
   let [sess] = useState(new TetrisLogic());
-  const [grid, setGrid] = useState(sess.getFullGrid().subarray(3, -1));
+  const [grid, setGrid] = useState(sess.getFullGrid().subarray(5, -1));
   const [score, setScore] = useState(0);
   const [rows, setRows] = useState(0);
   const [level, setLevel] = useState(1);
@@ -22,6 +23,7 @@ function App() {
     const curState = sess.getState()
     setGrid(curState.grid);
     setScore(curState.score);
+    shift(curState.score)
     setRows(curState.rows);
     setLevel(curState.level);
     setPaused(curState.paused);
@@ -62,7 +64,7 @@ function App() {
       <p>Score: {score}</p>
       <p>Rows: {rows}</p>
       <p>Level {level}</p>
-      <Grid grid={grid.subarray(3, -1)}/>
+      <Grid grid={grid.subarray(5, -1)}/>
       <button onClick={()=>sess.setPause()} disabled={gameOver}>{paused? "Continue" : "Pause"} Game</button>
       <button onClick={()=>{sess.newSesh(); updateState()}}>New Game</button>
     </div>

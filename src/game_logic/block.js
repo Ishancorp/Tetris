@@ -2,7 +2,7 @@ import { blocks, generateEmptyBoard, generateMiniBoard } from './helpers.js';
 
 export default class Block{
     x=3;
-    y=0;
+    y=2;
     constructor(type = (Math.floor(Math.random() * 7) + 1)){
         this.blk = blocks[type];
     }
