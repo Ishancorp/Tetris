@@ -6,16 +6,16 @@ export const scoreSlice = createSlice({
     name: 'score',
     initialState,
     reducers: {
-        shift: (state, action) => {
+        scoreShift: (state, action) => {
             state.score = action.payload
         },
-        reset: state => {
+        scoreReset: state => {
             state.score = 0
         }
     }
 })
 
-export const { shift, reset } = scoreSlice.actions
+export const { scoreShift, scoreReset } = scoreSlice.actions
 
 export const selectScore = state => state.score
 

@@ -2,7 +2,8 @@ import Grid from './components/Grid'
 import { useState, useEffect } from 'react';
 import TetrisLogic from './game_logic/tetris_logic.js'
 import './css/App.css'
-import { shift, reset, selectScore } from './app/reducer/scoreSlice'
+import { scoreShift, scoreReset, selectScore } from './app/reducer/scoreSlice'
+import { rowsShift, rowsReset, selectRows } from './app/reducer/rowsSlice'
 import { useSelector, useDispatch } from 'react-redux'
 
 Array.prototype.subarray = function(start, end) {
@@ -13,21 +14,20 @@ Array.prototype.subarray = function(start, end) {
 function App() {
   let [sess] = useState(new TetrisLogic());
   const [grid, setGrid] = useState(sess.getFullGrid().subarray(5, -1));
-  const [oscore, setScore] = useState(0);
-  const [rows, setRows] = useState(0);
+  const [erows, setRows] = useState(0);
   const [level, setLevel] = useState(1);
   const [paused, setPaused] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   let i = false;
   const { score } = useSelector(selectScore);
+  const { rows } = useSelector(selectRows);
   const dispatch = useDispatch();
-  console.log(score);
 
   const updateState = () => {
     const curState = sess.getState()
     setGrid(curState.grid);
-    setScore(curState.score);
-    dispatch(shift(curState.score));
+    dispatch(scoreShift(curState.score));
+    dispatch(rowsShift(curState.rows));
     setRows(curState.rows);
     setLevel(curState.level);
     setPaused(curState.paused);
