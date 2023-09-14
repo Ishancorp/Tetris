@@ -16,7 +16,6 @@ function App() {
   let [sess] = useState(new TetrisLogic());
   const [grid, setGrid] = useState(sess.getFullGrid().subarray(5, -1));
   const [level, setLevel] = useState(1);
-  const [paused, setPaused] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   let i = false;
   const { score } = useSelector(selectScore);
