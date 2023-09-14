@@ -1,14 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+const initialState = { score: 0 }
+
 export const scoreSlice = createSlice({
     name: 'score',
-    initialState: 0,
+    initialState,
     reducers: {
         shift: (state, action) => {
-            state = action.payload
+            state.score = action.payload
         },
         reset: state => {
-            state = 0
+            state.score = 0
         }
     }
 })
