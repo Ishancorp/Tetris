@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import scoreReducer from './reducer/scoreSlice'
-import rowsReducer from './reducer/rowsSlice'
 import pauseReducer from './reducer/pauseSlice'
+import gridReducer from './reducer/gridSlice'
+import statsReducer from './reducer/statsSlice'
 
 export default configureStore({
   reducer: {
-    score: scoreReducer,
-    rows: rowsReducer,
     pause: pauseReducer,
+    grid: gridReducer,
+    stats: statsReducer,
   },
 })
