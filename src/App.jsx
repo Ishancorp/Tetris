@@ -2,7 +2,7 @@ import Grid from './components/Grid'
 import { useState, useEffect } from 'react';
 import TetrisLogic from './game_logic/tetris_logic.js'
 import './css/App.css'
-import { pauseShift, pauseReset, selectPause } from './app/reducer/pauseSlice'
+import { pauseShift, pauseReset, gameOverShift, gameOverReset, selectCont } from './app/reducer/contSlice'
 import { gridShift, gridReset, selectGrid } from './app/reducer/gridSlice'
 import { scoreShift, scoreReset, rowsShift, rowsReset, levelShift, levelReset, selectStats } from './app/reducer/statsSlice'
 import { useSelector, useDispatch } from 'react-redux'
@@ -14,10 +14,10 @@ Array.prototype.subarray = function(start, end) {
 
 function App() {
   let [sess] = useState(new TetrisLogic());
-  const [gameOver, setGameOver] = useState(false);
+  const [gameOover, setGameOver] = useState(false);
   let i = false;
   const { score, rows, level } = useSelector(selectStats);
-  const { pause } = useSelector(selectPause);
+  const { pause, gameOver } = useSelector(selectCont);
   const { grid } = useSelector(selectGrid);
   const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ function App() {
     dispatch(levelShift(curState.level));
     dispatch(pauseShift(curState.paused));
     dispatch(gridShift(curState.grid));
-    setGameOver(curState.game_over);
+    dispatch(gameOverShift(curState.game_over));
   }
 
   useEffect(() => {

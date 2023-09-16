@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = { score: 0, rows: 0, level: 0 }
 
 export const statsSlice = createSlice({
-    name: 'score',
+    name: 'stats',
     initialState,
     reducers: {
         scoreShift: (state, action) => {
