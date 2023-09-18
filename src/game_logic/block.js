@@ -55,8 +55,4 @@ export default class Block{
     iterRight(){
         (this.x)++;
     }
-
-    hitBottom(){
-        return this.y === 10;
-    }
 }
