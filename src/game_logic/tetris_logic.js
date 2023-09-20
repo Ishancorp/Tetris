@@ -229,15 +229,6 @@ export default class TetrisLogic{
         }
     }
 
-    setRowsToColour(colour){
-        const tot_rows = this.getCompletedRows();
-        for(let item = 0; item < tot_rows.length; ++item){
-            for(let j = 0; j < this.getFullGrid()[tot_rows[item]].length; ++j){
-                this.board[tot_rows[item]][j] = colour;
-            }
-        }
-    }
-
     setPause(){
         this.pause = !(this.pause);
     }
