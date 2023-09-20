@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-import Block from '../../game_logic/block'
 import { blocks, generateEmptyBoard, generateMiniBoard } from '../../game_logic/helpers.js';
 
-const initialState = { block: new Block(), x: 3, y: 2, blk: blocks[type] }
+const initialState = { x: 3, y: 2, blk: blocks[(Math.floor(Math.random() * 7) + 1)] }
 
 export const blockSlice = createSlice({
     name: 'block',

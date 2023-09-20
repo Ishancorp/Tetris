@@ -3,8 +3,7 @@ import { useState, useEffect } from 'react';
 import TetrisLogic from './game_logic/tetris_logic.js'
 import './css/App.css'
 import { pauseShift, pauseReset, gameOverShift, gameOverReset, selectCont } from './app/reducer/contSlice'
-import { gridShift, gridReset, selectGrid } from './app/reducer/gridSlice'
-import { scoreShift, scoreReset, rowsShift, rowsReset, levelShift, levelReset, selectStats } from './app/reducer/statsSlice'
+import { scoreShift, scoreReset, rowsShift, rowsReset, levelShift, levelReset, selectStats, gridShift, gridReset } from './app/reducer/statsSlice'
 import { useSelector, useDispatch } from 'react-redux'
 
 Array.prototype.subarray = function(start, end) {
@@ -14,11 +13,10 @@ Array.prototype.subarray = function(start, end) {
 
 function App() {
   let [sess] = useState(new TetrisLogic());
-  const [gameOover, setGameOver] = useState(false);
   let i = false;
-  const { score, rows, level } = useSelector(selectStats);
+  const { score, rows, level, grid } = useSelector(selectStats);
   const { pause, gameOver } = useSelector(selectCont);
-  const { grid } = useSelector(selectGrid);
+  //const { grid } = useSelector(selectGrid);
   const dispatch = useDispatch();
 
   const updateState = () => {
@@ -64,7 +62,7 @@ function App() {
       <p>Score: {score}</p>
       <p>Rows: {rows}</p>
       <p>Level {level}</p>
-      <Grid grid={grid.grid.subarray(5, -1)}/>
+      <Grid grid={grid.subarray(5, -1)}/>
       <button onClick={()=>sess.setPause()} disabled={gameOver}>{pause? "Continue" : "Pause"} Game</button>
       <button onClick={()=>{sess.newSesh(); updateState()}}>New Game</button>
     </div>

@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { generateEmptyBoard } from '../../game_logic/helpers'
 
-const initialState = { score: 0, rows: 0, level: 0 }
+const initialState = { score: 0, rows: 0, level: 0, grid: generateEmptyBoard() }
 
 export const statsSlice = createSlice({
     name: 'stats',
@@ -23,11 +24,17 @@ export const statsSlice = createSlice({
         },
         levelReset: state => {
             state.level = 0
+        },
+        gridShift: (state, action) => {
+            state.grid = action.payload
+        },
+        gridReset: state => {
+            state.grid = generateEmptyBoard()
         }
     }
 })
 
-export const { scoreShift, scoreReset, rowsShift, rowsReset, levelShift, levelReset } = statsSlice.actions
+export const { scoreShift, scoreReset, rowsShift, rowsReset, levelShift, levelReset, gridShift, gridReset } = statsSlice.actions
 
 export const selectStats = state => state.stats
 
