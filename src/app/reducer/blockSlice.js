@@ -28,6 +28,9 @@ export const blockSlice = createSlice({
             }
 
             state.blk = new_block
+        },
+        blockReset: state => {
+            state = { x: 3, y: 2, blk: blocks[(Math.floor(Math.random() * 7) + 1)] }
         }
     }
 })

@@ -30,6 +30,18 @@ export const statsSlice = createSlice({
         },
         gridReset: state => {
             state.grid = generateEmptyBoard()
+        },
+        deactivateBlock: (state, action) => {
+            //payload being the block.getFullBlock
+            const fullBlock = action.payload
+            let newGrid = generateEmptyBoard()
+            for (const i = 0; i < newGrid.length; ++i) {
+                for (const j = 0; j < newGrid[i].length; ++j) {
+                    newGrid[i][j] = fullBlock[i][j] + state.grid[i][j]
+                }
+            }
+            state.grid = newGrid
+            //add line on removing lines and adding empty ones at top
         }
     }
 })
