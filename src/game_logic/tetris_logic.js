@@ -97,7 +97,6 @@ export default class TetrisLogic{
     }
 
     blockLeft(){
-        console.log(45325)
         if(!this.hasCollidedLeft() && (!this.pause)){
             this.active_block.iterLeft();
         }
