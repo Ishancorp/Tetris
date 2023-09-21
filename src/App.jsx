@@ -16,7 +16,6 @@ function App() {
   let i = false;
   const { score, rows, level, grid } = useSelector(selectStats);
   const { pause, gameOver } = useSelector(selectCont);
-  //const { grid } = useSelector(selectGrid);
   const dispatch = useDispatch();
 
   const updateState = () => {
