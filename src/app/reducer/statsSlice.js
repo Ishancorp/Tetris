@@ -42,6 +42,33 @@ export const statsSlice = createSlice({
             }
             state.grid = newGrid
             //add line on removing lines and adding empty ones at top
+        },
+        deleteCurrentRows: state => {
+            let tot_rows = [];
+    
+            for(let i = 0; i < state.grid.length; ++i){
+                let complete_row = true;
+                for(let j = 0; j < state.grid[i].length; ++j){
+                    if(!state.grid[i][j]){
+                        complete_row = false;
+                    }
+                }
+    
+                if(complete_row){
+                    tot_rows.push(i);
+                }
+            }
+
+            let temp_grid = state.grid
+
+            for(let i = tot_rows.length-1; i >= 0; --i){
+                temp_grid.splice(tot_rows[i], 1);
+            }
+            for(let i = tot_rows.length-1; i >= 0; --i){
+                temp_grid.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+            }
+
+            state.grid = temp_grid
         }
     }
 })

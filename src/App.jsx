@@ -2,8 +2,8 @@ import Grid from './components/Grid'
 import { useState, useEffect } from 'react';
 import TetrisLogic from './game_logic/tetris_logic.js'
 import './css/App.css'
-import { pauseShift, pauseReset, gameOverShift, gameOverReset, selectCont } from './app/reducer/contSlice'
-import { scoreShift, scoreReset, rowsShift, rowsReset, levelShift, levelReset, selectStats, gridShift, gridReset } from './app/reducer/statsSlice'
+import { pauseShift, gameOverShift, selectCont } from './app/reducer/contSlice'
+import { scoreShift, rowsShift, levelShift, gridShift, selectStats } from './app/reducer/statsSlice'
 import { useSelector, useDispatch } from 'react-redux'
 
 Array.prototype.subarray = function(start, end) {
